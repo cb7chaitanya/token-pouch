@@ -1,5 +1,6 @@
 require("@nomicfoundation/hardhat-toolbox");
 require('dotenv').config();
+require("@openzeppelin/hardhat-upgrades");
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
@@ -10,8 +11,8 @@ module.exports = {
     sepolia: {
       url: process.env.API_URL,
       accounts: [`0x${process.env.PRIVATE_KEY}`],
-      gas: 210000000,
-      gasPrice: 800000000000,
+      gas: 2100000,
+      gasPrice: 800000000,
     },
   }
 };

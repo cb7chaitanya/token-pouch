@@ -4,17 +4,12 @@ async function main() {
     const [deployer] = await ethers.getSigners();
     console.log("Deploying contracts with the account:", deployer.address);
     const token = await ethers.getContractFactory("Token");
-    const deployedToken = await upgrades.deployProxy(token, [deployer.address, 100000], {initializer: 'initialize'});
-    await deployedToken.deployed();
-    console.log("Token deployed to:", deployedToken.address);
+    const deployedToken = await token.deploy(deployer.address, 10000);
+    console.log("Token address:", deployedToken.target);
 
     const wallet = await ethers.getContractFactory("Wallet");
-    const deployedWallet = await upgrades.deployProxy(wallet, [], {initializer: 'initialize'});
-    await deployedWallet.deployed();
-    console.log("Wallet deployed to:", deployedWallet.address);
-    const gasEstimate = await token.estimateGas.transfer(deployer.address, ethers.utils.parseEther("1"));
-
-    console.log("Estimated gas cost:", gasEstimate.toString());
+    const deployedWallet = await wallet.deploy(deployer.address);
+    console.log("Wallet address:", deployedWallet.target);
 }
 
 main().catch((error) => {
